@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
 using System;
 
 
@@ -10,11 +11,11 @@ namespace HairSalon.Models
       private int _id;
       private string _nameFirst;
       private string _nameLast;
-      private int _number;
+      private long _number;
       private string _email;
       private int _stylistId;
 
-      public Client (string firstName, string lastName, int number, string email, int stylistId, int id = 0)
+      public Client (string firstName, string lastName, long number, string email, int stylistId, int id = 0)
       {
         _id = id;
         _nameFirst = firstName;
@@ -44,12 +45,12 @@ namespace HairSalon.Models
         return _nameLast;
       }
 
-      public void SetNumber(int number)
+      public void SetNumber(long number)
       {
         _number = number;
       }
 
-      public int GetNumber()
+      public long GetNumber()
       {
         return _number;
       }
@@ -64,7 +65,7 @@ namespace HairSalon.Models
         return _email;
       }
 
-      public void SetStylistId(int stylist_Id)
+      public void SetStylistId(int stylistId)
       {
         _stylistId = stylistId;
       }
@@ -108,6 +109,19 @@ namespace HairSalon.Models
         return this.GetId().GetHashCode();
       }
 
+      public static void DeleteAllClients()
+      {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"DELETE FROM clients;";
+        cmd.ExecuteNonQuery();
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+      }
 
     }
 

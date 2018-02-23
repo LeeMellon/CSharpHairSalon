@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
 using System;
 
 
@@ -67,9 +68,22 @@ namespace HairSalon.Models
 
       public override int GetHashCode()
       {
-        return this.GetId().GetHashCode();
+        return this.StylistGetId().GetHashCode();
       }
 
+      public static void DeleteAllStylists()
+      {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"DELETE FROM stylists;";
+        cmd.ExecuteNonQuery();
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+      }
     }
 
 }
