@@ -45,7 +45,7 @@ namespace HairSalon.Models
         _id = id;
       }
 
-      public int StylistGetId()
+      public int GetId()
       {
         return _id;
       }
@@ -59,8 +59,8 @@ namespace HairSalon.Models
         else
         {
           Stylist newStylist = (Stylist) otherStylist;
+          bool idEquality = (this.GetId() == newStylist.GetId());
           bool nameEquality = (this.GetStylistName() == newStylist.GetStylistName());
-          bool idEquality = (this.StylistGetId() == newStylist.StylistGetId());
           bool chairEquality = (this.GetStylstChair() == newStylist.GetStylstChair());
           return (idEquality && nameEquality && chairEquality);
         }
@@ -68,7 +68,7 @@ namespace HairSalon.Models
 
       public override int GetHashCode()
       {
-        return this.StylistGetId().GetHashCode();
+        return this.GetId().GetHashCode();
       }
 
       public static void DeleteAllStylists()
@@ -84,6 +84,59 @@ namespace HairSalon.Models
             conn.Dispose();
         }
       }
+
+      public static List<Stylist> GetAllStylists()
+      {
+        List<Stylist> allStylists = new List<Stylist>{};
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT * FROM stylists;";
+        var rdr = cmd.ExecuteReader() as MySqlDataReader;
+        while(rdr.Read())
+        {
+          int stylistId = rdr.GetInt32(0);
+          string stylistName = rdr.GetString(1);
+          int stylistChair = rdr.GetInt32(2);
+          Stylist newStylist = new Stylist(stylistName, stylistChair, stylistId);
+          allStylists.Add(newStylist);
+        }
+        conn.Close();
+        if (conn != null)
+        {
+          conn.Dispose();
+        }
+        return allStylists;
+      }
+
+      public void Save()
+      {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"INSERT INTO stylists (name, chair) VALUES (@name, @chair);";
+
+        MySqlParameter name = new MySqlParameter();
+        name.ParameterName = "@name";
+        name.Value = this._name;
+        cmd.Parameters.Add(name);
+
+        MySqlParameter chair = new MySqlParameter();
+        chair.ParameterName = "@chair";
+        chair.Value = this._chair;
+        cmd.Parameters.Add(chair);
+
+        cmd.ExecuteNonQuery();
+        _id = (int) cmd.LastInsertedId;
+
+         conn.Close();
+         if (conn != null)
+         {
+           conn.Dispose();
+        }
+      }
+
     }
 
 }
