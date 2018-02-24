@@ -63,7 +63,7 @@ git clone https://github.com/LeeMellon/CSharpHairSalon.git
 
 ## Known Bugs
 
-_{Are there issues that have not yet been resolved that you want to let users know you know?  Outline any issues that would impact use of your application.  Share any workarounds that are in place. }_
+_{Currently the test DB setup is not functioning. Only test in dummy database for now. DO NOT RUN TESTS ON CLIENT DATABASE}_
 
 ## Support and contact details
 
