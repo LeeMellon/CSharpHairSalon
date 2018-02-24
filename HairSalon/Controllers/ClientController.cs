@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using HairSalon.Models;
 using System;
 
-namespace HairStylist.Controllers
+namespace HairSalon.Controllers
 {
-    public class Client : Controller
+    public class ClientController : Controller
     {
       [HttpGet("/")]
           public ActionResult Index()
