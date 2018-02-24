@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using System;
+using HairSalon;
 
 
 namespace HairSalon.Models
@@ -109,7 +110,7 @@ namespace HairSalon.Models
         return this.GetId().GetHashCode();
       }
 
-      public static void DeleteAllClients()
+      public static void DeleteAll()
       {
         MySqlConnection conn = DB.Connection();
         conn.Open();
@@ -184,8 +185,9 @@ namespace HairSalon.Models
           cmd.Parameters.Add(stylistId);
 
            cmd.ExecuteNonQuery();
-           
-          _id = (int) cmd.LastInsertedId;
+
+           _id = (int) cmd.LastInsertedId;
+           System.Console.WriteLine("Here" + _id);
           conn.Close();
           if (conn != null)
           {

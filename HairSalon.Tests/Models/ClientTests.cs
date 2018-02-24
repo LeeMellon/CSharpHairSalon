@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System;
-using System.Linq;
+// using System.Linq;
 using HairSalon.Models;
 
 namespace HairSalon.Tests
@@ -11,12 +11,12 @@ namespace HairSalon.Tests
   {
     public void Dispose()
     {
-      Client.DeleteAllClients();
+      Client.DeleteAll();
     }
 
     public void ClientTests()
     {
-    DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=ian_goodrich_test;";
+    DBConfiguration.ConnectionString ="server=localhost;user id=root;password=root;port=3306;database=ian_goodrich_test;";
     }
 
     [TestMethod]
@@ -108,7 +108,7 @@ namespace HairSalon.Tests
       newClient3.Save();
       //action
       Client testClient = Client.Find(2);
-      System.Console.WriteLine(newClient2.GetId());
+      System.Console.WriteLine("Test" + newClient2.GetId());
       string testClientName = testClient.GetFirstName();
 
       //assert

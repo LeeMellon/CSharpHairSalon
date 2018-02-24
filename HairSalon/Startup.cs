@@ -6,10 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace HairSalon
 {
-  public static class DBConfiguration
-  {
-  public static string ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=ian_goodrich;";
-  }
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -42,5 +38,9 @@ namespace HairSalon
                 await context.Response.WriteAsync("Ummm.....I got nothin' here.");
             });
         }
+    }
+    public static class DBConfiguration
+    {
+    public static string ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=ian_goodrich;";
     }
 }
