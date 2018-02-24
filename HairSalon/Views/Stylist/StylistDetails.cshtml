@@ -1,7 +1,7 @@
 <h1>@Model["stylistName"].GetStylistName()</h1>
 
 <ul>
-  @foreach(var client in @Model["categoryClients"])
+  @foreach(var client in @Model["stylistClients"])
   {
   <li>First Name: @client.GetFirstName()  Last Name: @client.GetLastName() | <a href="/client/@client.GetId()/update">Edit Client</a> | <a href="/client/@client.GetId()/details">View Client Data</a> |<a href="/client/@client.GetId()/delete">Delete Client Record</a></li>
   }

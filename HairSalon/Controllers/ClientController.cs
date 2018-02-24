@@ -8,7 +8,7 @@ namespace HairSalon.Controllers
     public class ClientController : Controller
     {
       [HttpGet("/client/{id}/new")]
-          public ActionResult CreateForm(int id)
+          public ActionResult ClientCreator(int id)
           {
             Stylist thisStylist = Stylist.Find(id);
               return View(thisStylist);

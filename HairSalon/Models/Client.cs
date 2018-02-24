@@ -138,6 +138,30 @@ namespace HairSalon.Models
             conn.Dispose();
         }
       }
+      public static string GetStylistNameByClient()
+      {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT FROM stylists WHERE id = @thisId;";
+        var rdr = cmd.ExecuteReader() as MySqlDataReader;
+        while(rdr.Read())
+
+        MySqlParameter thisId = new MySqlParameter();
+        thisId.ParameterName = "@thisId";
+        thisId.Value = this._id;
+        cmd.Parameters.Add(thisId);
+
+        {
+          string stylistName = rdr.GetString(1);
+        }
+        conn.Close();
+        if (conn != null)
+        {
+          conn.Dispose();
+        }
+        return stylistName;
+      }
 
       public static List<Client> GetAllClients()
       {
@@ -166,7 +190,7 @@ namespace HairSalon.Models
         return allClients;
       }
 
-      public void Save()
+      public static void Save()
         {
           MySqlConnection conn = DB.Connection();
           conn.Open();
