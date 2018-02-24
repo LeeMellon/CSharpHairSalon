@@ -117,7 +117,7 @@ namespace HairSalon.Tests
     }
 
     [TestMethod]
-    public void DeleteAll_ReturnEmptyList_List()
+    public void DeleteAllClients_ReturnEmptyList_List()
     {
       //arrange
       Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", 1);

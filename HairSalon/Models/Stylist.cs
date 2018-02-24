@@ -35,7 +35,7 @@ namespace HairSalon.Models
         _chair = chair;
       }
 
-      public int GetStylstChair()
+      public int GetStylistChair()
       {
         return _chair;
       }
@@ -61,7 +61,7 @@ namespace HairSalon.Models
           Stylist newStylist = (Stylist) otherStylist;
           bool idEquality = (this.GetId() == newStylist.GetId());
           bool nameEquality = (this.GetStylistName() == newStylist.GetStylistName());
-          bool chairEquality = (this.GetStylstChair() == newStylist.GetStylstChair());
+          bool chairEquality = (this.GetStylistChair() == newStylist.GetStylistChair());
           return (idEquality && nameEquality && chairEquality);
         }
       }
@@ -196,7 +196,7 @@ namespace HairSalon.Models
         MySqlConnection conn = DB.Connection();
         conn.Open();
         var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"UPDATE stylist SET name = @newName, chair = @newChair WHERE id = @searchId;";
+        cmd.CommandText = @"UPDATE stylists SET name = @newName, chair = @newChair WHERE id = @searchId;";
 
         MySqlParameter searchId = new MySqlParameter();
         searchId.ParameterName = "@searchId";
@@ -223,6 +223,41 @@ namespace HairSalon.Models
             conn.Dispose();
         }
       }
+
+      // public static List<Client> GetClientsByStylistId(int id)
+      // {
+      //   List<Client> clientsByStylist = new List<Client>{};
+      //   MySqlConnection conn = DB.Connection();
+      //   conn.Open();
+      //   var cmd = conn.CreateCommand() as MySqlCommand;
+      //   cmd.CommandText = @"SELECT * FROM clients WHERE stylist_id = @searchId;";
+      //
+      //   MySqlParameter searchId = new MySqlParameter();
+      //   searchId.ParameterName = "@searchId";
+      //   searchId.Value = id;
+      //   cmd.Parameters.Add(searchId);
+      //   var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      //
+      //   while(rdr.Read())
+      //   {
+      //     int clientId = rdr.GetInt32(0);
+      //     string clientFirstName = rdr.GetString(1);
+      //     string clientLastName = rdr.GetString(2);
+      //     long clientNumber = rdr.GetInt64(3);
+      //     string clientEmail = rdr.GetString(4);
+      //     int clientStylistId = rdr.GetInt32(5);
+      //     Client newClient = new Client(clientFirstName, clientLastName, clientNumber, clientEmail, clientStylistId, clientId);
+      //     clientsByStylist.Add(newClient);
+      //   }
+      //   conn.Close();
+      //   if (conn != null)
+      //   {
+      //       conn.Dispose();
+      //   }
+      //   return clientsByStylist;
+      //   }
+
+
     }
 
 }
