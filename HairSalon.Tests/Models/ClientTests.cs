@@ -9,15 +9,16 @@ namespace HairSalon.Tests
   [TestClass]
   public class ClientTest : IDisposable
   {
+    public void ClientTests()
+    {
+
+      DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=ian_goodrich_test;";
+    }
     public void Dispose()
     {
       Client.DeleteAll();
     }
 
-    public void ClientTests()
-    {
-    DBConfiguration.ConnectionString ="server=localhost;user id=root;password=root;port=3306;database=ian_goodrich_test;";
-    }
 
     [TestMethod]
     public void GetsAndSets_AllGettersAndSetters_Values()
@@ -100,14 +101,15 @@ namespace HairSalon.Tests
     {
       //arrange
       //last argument is client id
-      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", 1, 3);
-      Client newClient2 = new Client("Hanz", "Hanzia", 5411112222, "franz@franzia.org", 1, 2);
-      Client newClient3 = new Client("Branz", "Branzia", 5101112222, "franz@franzia.org", 1, 1);
+      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", 1);
+      Client newClient2 = new Client("Hanz", "Hanzia", 5411112222, "franz@franzia.org", 1);
+      Client newClient3 = new Client("Branz", "Branzia", 5101112222, "franz@franzia.org", 1);
       newClient1.Save();
       newClient2.Save();
       newClient3.Save();
       //action
-      Client testClient = Client.Find(2);
+      int clientId = newClient2.GetId();
+      Client testClient = Client.Find(clientId);
       System.Console.WriteLine("Test" + newClient2.GetId());
       string testClientName = testClient.GetFirstName();
 

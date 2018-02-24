@@ -26,6 +26,30 @@ namespace HairSalon.Models
         _stylistId = stylistId;
       }
 
+      public override bool Equals(System.Object otherClient)
+      {
+        if (!(otherClient is Client))
+        {
+          return false;
+        }
+        else
+        {
+          Client newClient = (Client) otherClient;
+          bool idEquality = (this.GetId() == newClient.GetId());
+          bool firstNameEquality = (this.GetFirstName() == newClient.GetFirstName());
+          bool lastNameEquality = (this.GetLastName() == newClient.GetLastName());
+          bool numberEquality = (this.GetNumber() == newClient.GetNumber());
+          bool emailEquality = (this.GetEmail() == newClient.GetEmail());
+          bool stylistIdEquality = (this.GetStylistId() == newClient.GetStylistId());
+          return (idEquality && firstNameEquality && lastNameEquality && numberEquality && emailEquality && stylistIdEquality);
+        }
+      }
+
+      public override int GetHashCode()
+      {
+        return this.GetId().GetHashCode();
+      }
+
       public void SetFirstName(string firstName)
       {
         _nameFirst = firstName;
@@ -86,29 +110,6 @@ namespace HairSalon.Models
         return _id;
       }
 
-      public override bool Equals(System.Object otherClient)
-      {
-        if (!(otherClient is Client))
-        {
-          return false;
-        }
-        else
-        {
-          Client newClient = (Client) otherClient;
-          bool idEquality = (this.GetId() == newClient.GetId());
-          bool firstNameEquality = (this.GetFirstName() == newClient.GetFirstName());
-          bool lastNameEquality = (this.GetLastName() == newClient.GetLastName());
-          bool numberEquality = (this.GetNumber() == newClient.GetNumber());
-          bool emailEquality = (this.GetEmail() == newClient.GetEmail());
-          bool stylistIdEquality = (this.GetStylistId() == newClient.GetStylistId());
-          return (idEquality && firstNameEquality && lastNameEquality && numberEquality && emailEquality && stylistIdEquality);
-        }
-      }
-
-      public override int GetHashCode()
-      {
-        return this.GetId().GetHashCode();
-      }
 
       public static void DeleteAll()
       {

@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace HairSalon
 {
@@ -15,7 +16,6 @@ namespace HairSalon
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-
         public IConfigurationRoot Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
@@ -25,22 +25,23 @@ namespace HairSalon
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseDeveloperExceptionPage();
-            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
+                app.UseDeveloperExceptionPage();
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseStaticFiles();
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Ummm.....I got nothin' here.");
+                await context.Response.WriteAsync("Hello World!");
             });
         }
     }
+
     public static class DBConfiguration
     {
-    public static string ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=ian_goodrich;";
+        public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=ian_goodrich;";
     }
 }

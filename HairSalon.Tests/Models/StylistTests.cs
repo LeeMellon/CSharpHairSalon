@@ -16,7 +16,7 @@
 //
 //     public void StylistTests()
 //     {
-//       DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=ian_goodrich_test;";
+//       DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=ian_goodrich_test;";
 //     }
 //
 //     [TestMethod]

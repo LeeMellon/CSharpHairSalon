@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace HairSalon
 {
-    public class Program
+    public class program
     {
         public static void Main(string[] args)
         {
