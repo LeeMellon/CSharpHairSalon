@@ -24,9 +24,9 @@ namespace HairSalon.Controllers
         [HttpPost("/stylist/create")]
       public ActionResult CreateStylist()
       {
-        Stylist newStylist = new Stylist (Request.Form["new-stylist"]);
+        Stylist newStylist = new Stylist (Request.Form["new-stylist"], Convert.ToInt32(Request.Form["stylist-chair"]));
         newStylist.Save();
-        List<Stylist> allStylist = Stylist.GetAll();
+        List<Stylist> allStylist = Stylist.GetAllStylists();
         return RedirectToAction("Index", allStylist);
       }
 
