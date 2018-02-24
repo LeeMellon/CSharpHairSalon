@@ -16,7 +16,7 @@ namespace HairSalon.Tests
     }
     public void Dispose()
     {
-      Client.DeleteAll();
+      Client.DeleteAllClients();
     }
 
 
@@ -100,7 +100,6 @@ namespace HairSalon.Tests
     public void FindClients_ReturnClientName_String()
     {
       //arrange
-      //last argument is client id
       Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", 1);
       Client newClient2 = new Client("Hanz", "Hanzia", 5411112222, "franz@franzia.org", 1);
       Client newClient3 = new Client("Branz", "Branzia", 5101112222, "franz@franzia.org", 1);
@@ -115,6 +114,25 @@ namespace HairSalon.Tests
 
       //assert
       Assert.AreEqual("Hanz", testClientName);
+    }
+
+    [TestMethod]
+    public void DeleteAll_ReturnEmptyList_List()
+    {
+      //arrange
+      Client newClient1 = new Client("Franz", "Franzia", 5031112222, "franz@franzia.org", 1);
+      Client newClient2 = new Client("Hanz", "Hanzia", 5411112222, "franz@franzia.org", 1);
+      Client newClient3 = new Client("Branz", "Branzia", 5101112222, "franz@franzia.org", 1);
+      newClient1.Save();
+      newClient2.Save();
+      newClient3.Save();
+      //action
+      Client.DeleteAllClients();
+      List<Client> clientList = Client.GetAllClients();
+      int clientListCount = clientList.Count;
+
+      //assert
+      Assert.AreEqual(clientListCount, 0);
     }
   }
 }
