@@ -184,6 +184,7 @@ namespace HairSalon.Models
           cmd.Parameters.Add(stylistId);
 
            cmd.ExecuteNonQuery();
+           
           _id = (int) cmd.LastInsertedId;
           conn.Close();
           if (conn != null)
@@ -193,6 +194,120 @@ namespace HairSalon.Models
 
         }
 
+        public static void DeleteClient(int id)
+        {
+         MySqlConnection conn = DB.Connection();
+         conn.Open();
+
+         var cmd = conn.CreateCommand() as MySqlCommand;
+         cmd.CommandText = @"DELETE FROM clients WHERE id = @id;";
+
+         MySqlParameter thisId = new MySqlParameter();
+         thisId.ParameterName = "@id";
+         thisId.Value = id;
+         cmd.Parameters.Add(thisId);
+         var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+
+         conn.Close();
+         if (conn != null)
+         {
+           conn.Dispose();
+         }
+        }
+
+        public static Client Find(int id)
+        {
+          MySqlConnection conn = DB.Connection();
+          conn.Open();
+          var cmd = conn.CreateCommand() as MySqlCommand;
+          cmd.CommandText = @"SELECT * FROM clients WHERE id = @searchId;";
+
+          MySqlParameter searchId = new MySqlParameter();
+          searchId.ParameterName = "@searchId";
+          searchId.Value = id;
+          cmd.Parameters.Add(searchId);
+          // System.Console.WriteLine(id);
+
+          // System.Console.WriteLine(searchId.Value);
+          var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+          int clientId = 0;
+          string clientFirstName = "";
+          string clientLastName = "";
+          long clientNumber = 0;
+          string clientEmail = "";
+          int clientStylistId = 0;
+
+          while(rdr.Read())
+          {
+            clientId = rdr.GetInt32(0);
+            clientFirstName = rdr.GetString(1);
+            clientLastName = rdr.GetString(2);
+            clientNumber = rdr.GetInt64(3);
+            clientEmail = rdr.GetString(4);
+            clientStylistId = rdr.GetInt32(5);
+          }
+          Client newClient = new Client(clientFirstName, clientLastName, clientNumber, clientEmail, clientStylistId, clientId);
+          conn.Close();
+          if (conn != null)
+          {
+              conn.Dispose();
+          }
+          return newClient;
+        }
+
+        public void EditClient(string newFirstName, string newLastName, long newNumber, string newEmail, int newStylistId)
+        {
+         MySqlConnection conn = DB.Connection();
+         conn.Open();
+         var cmd = conn.CreateCommand() as MySqlCommand;
+         cmd.CommandText = @"UPDATE clients SET first_name = @firstname, last_name = @lastname, number = @number, email = @email, stylist_id = @stylistId  WHERE id = @searchId;";
+
+         MySqlParameter searchId = new MySqlParameter();
+         searchId.ParameterName = "@searchId";
+         searchId.Value = _id;
+         cmd.Parameters.Add(searchId);
+
+         MySqlParameter firstName = new MySqlParameter();
+         firstName.ParameterName = "@firstName";
+         firstName.Value = newFirstName;
+         cmd.Parameters.Add(firstName);
+
+         MySqlParameter lastName = new MySqlParameter();
+         lastName.ParameterName = "@lastName";
+         lastName.Value = newLastName;
+         cmd.Parameters.Add(lastName);
+
+         MySqlParameter number = new MySqlParameter();
+         number.ParameterName = "@number";
+         number.Value = newNumber;
+         cmd.Parameters.Add(number);
+
+         MySqlParameter email = new MySqlParameter();
+         email.ParameterName = "@email";
+         email.Value = newEmail;
+         cmd.Parameters.Add(email);
+
+         MySqlParameter stylistId = new MySqlParameter();
+         stylistId.ParameterName = "@stylistId";
+         stylistId.Value = newStylistId;
+         cmd.Parameters.Add(stylistId);
+
+
+         cmd.ExecuteNonQuery();
+         _nameFirst = newFirstName;
+         _nameLast = newLastName;
+         _number = newNumber;
+         _email = newEmail;
+         _stylistId = newStylistId;
+
+         conn.Close();
+         if (conn != null)
+         {
+             conn.Dispose();
+         }
+       }
     }
 
 }

@@ -137,6 +137,92 @@ namespace HairSalon.Models
         }
       }
 
+      public static void DeleteStylist(int id)
+      {
+         MySqlConnection conn = DB.Connection();
+         conn.Open();
+
+         var cmd = conn.CreateCommand() as MySqlCommand;
+         cmd.CommandText = @"DELETE FROM stylists WHERE id = @id;";
+
+         MySqlParameter thisId = new MySqlParameter();
+         thisId.ParameterName = "@id";
+         thisId.Value = id;
+         cmd.Parameters.Add(thisId);
+         var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+         conn.Close();
+         if (conn != null)
+         {
+           conn.Dispose();
+         }
+       }
+
+       public static Stylist Find(int id)
+       {
+         MySqlConnection conn = DB.Connection();
+         conn.Open();
+         var cmd = conn.CreateCommand() as MySqlCommand;
+         cmd.CommandText = @"SELECT * FROM stylists WHERE id = @searchId;";
+
+         MySqlParameter searchId = new MySqlParameter();
+         searchId.ParameterName = "@searchId";
+         searchId.Value = id;
+         cmd.Parameters.Add(searchId);
+
+         var rdr = cmd.ExecuteReader() as MySqlDataReader;
+         int stylistId = 0;
+         string stylistName = "";
+         int stylistChair = 0;
+
+         while(rdr.Read())
+         {
+           stylistId = rdr.GetInt32(0);
+           stylistName = rdr.GetString(1);
+           stylistChair = rdr.GetInt32(2);
+
+         }
+         Stylist newStylist = new Stylist(stylistName, stylistChair, stylistId);
+         conn.Close();
+         if (conn != null)
+         {
+             conn.Dispose();
+         }
+         return newStylist;
+       }
+
+       public void EditStylist(string newName, int newChair)
+       {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"UPDATE stylist SET name = @newName, chair = @newChair WHERE id = @searchId;";
+
+        MySqlParameter searchId = new MySqlParameter();
+        searchId.ParameterName = "@searchId";
+        searchId.Value = _id;
+        cmd.Parameters.Add(searchId);
+
+        MySqlParameter name = new MySqlParameter();
+        name.ParameterName = "@newName";
+        name.Value = newName;
+        cmd.Parameters.Add(name);
+
+        MySqlParameter chair = new MySqlParameter();
+        chair.ParameterName = "@newChair";
+        chair.Value = newChair;
+        cmd.Parameters.Add(chair);
+
+        cmd.ExecuteNonQuery();
+        _name = newName;
+        _chair = newChair;
+
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+      }
     }
 
 }
