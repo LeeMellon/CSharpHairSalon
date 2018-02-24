@@ -70,7 +70,8 @@ namespace HairSalon.Tests
       int clientListCount = clientList.Count;
       //action
       int deleteId = clientList[1].GetId();
-      Client.DeleteClient(deleteId);
+      Client thisClient = Client.Find(deleteId);
+      thisClient.DeleteClient();
       List<Client> testList = Client.GetAllClients();
       int testListCount = testList.Count;
 

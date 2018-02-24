@@ -138,30 +138,7 @@ namespace HairSalon.Models
             conn.Dispose();
         }
       }
-      public static string GetStylistNameByClient()
-      {
-        MySqlConnection conn = DB.Connection();
-        conn.Open();
-        var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT FROM stylists WHERE id = @thisId;";
-        var rdr = cmd.ExecuteReader() as MySqlDataReader;
-        while(rdr.Read())
 
-        MySqlParameter thisId = new MySqlParameter();
-        thisId.ParameterName = "@thisId";
-        thisId.Value = this._id;
-        cmd.Parameters.Add(thisId);
-
-        {
-          string stylistName = rdr.GetString(1);
-        }
-        conn.Close();
-        if (conn != null)
-        {
-          conn.Dispose();
-        }
-        return stylistName;
-      }
 
       public static List<Client> GetAllClients()
       {
@@ -190,7 +167,7 @@ namespace HairSalon.Models
         return allClients;
       }
 
-      public static void Save()
+      public void Save()
         {
           MySqlConnection conn = DB.Connection();
           conn.Open();
@@ -235,7 +212,7 @@ namespace HairSalon.Models
 
         }
 
-        public static void DeleteClient(int id)
+        public void DeleteClient()
         {
          MySqlConnection conn = DB.Connection();
          conn.Open();
@@ -245,7 +222,7 @@ namespace HairSalon.Models
 
          MySqlParameter thisId = new MySqlParameter();
          thisId.ParameterName = "@id";
-         thisId.Value = id;
+         thisId.Value = this._id;
          cmd.Parameters.Add(thisId);
          var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
@@ -268,9 +245,7 @@ namespace HairSalon.Models
           searchId.ParameterName = "@searchId";
           searchId.Value = id;
           cmd.Parameters.Add(searchId);
-          // System.Console.WriteLine(id);
 
-          // System.Console.WriteLine(searchId.Value);
           var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
           int clientId = 0;

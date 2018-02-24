@@ -46,6 +46,18 @@ namespace HairSalon.Controllers
             return RedirectToAction("index", "stylist");
           }
 
+          [HttpGet("/client/{id}/details")]
+          public ActionResult Details(int id)
+          {
+            Client thisClient = Client.Find(id);
+            int stylistId = thisClient.GetStylistId();
+            Stylist thisStylist = Stylist.Find(stylistId);
+            Dictionary<string, object> clientStyistsDict = new Dictionary<string, object>();
+            clientStyistsDict.Add("stylist", thisStylist);
+            clientStyistsDict.Add("client", thisClient);
+            return View(clientStyistsDict);
+          }
+
           [HttpPost("/client/{id}/delete_all")]
           public ActionResult DeleteAll(int id)
           {
@@ -54,13 +66,15 @@ namespace HairSalon.Controllers
           }
 
           [HttpPost("/client/{id}/delete")]
-          public ActionResult DeleteClient(int id)
+          public ActionResult Delete(int id)
           {
             Client thisClient = Client.Find(id);
-            int stylistId = thisClient.GetStylistId();
-            Client.DeleteClient(id);
-            return RedirectToAction("StylistDetails", "stylist", new {Id = thisClient.GetStylistId()});
+            int thisId = thisClient.GetStylistId();
+            System.Console.WriteLine(thisId);
+            thisClient.DeleteClient();
+            return RedirectToAction("StylistDetails", "stylist", new {Id = thisId});
           }
+
 
     }
 }

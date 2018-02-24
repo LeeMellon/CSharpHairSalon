@@ -55,5 +55,6 @@ namespace HairSalon.Controllers
          List<Stylist> allStylists = Stylist.GetAllStylists();
          return View("index", allStylists);
        }
+
     }
 }
