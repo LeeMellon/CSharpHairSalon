@@ -71,6 +71,7 @@ namespace HairSalon.Models
         return this.GetId().GetHashCode();
       }
 
+      //SAVED FOR POTENTIAL FUTURE NEED.
       public static void DeleteAllStylists()
       {
         MySqlConnection conn = DB.Connection();
@@ -85,6 +86,7 @@ namespace HairSalon.Models
         }
       }
 
+      //RETURNS LIST OF ALL STYLISTS
       public static List<Stylist> GetAllStylists()
       {
         List<Stylist> allStylists = new List<Stylist>{};
@@ -109,6 +111,7 @@ namespace HairSalon.Models
         return allStylists;
       }
 
+      //SAVES INDIVIDUAL STYLIST
       public void Save()
       {
         MySqlConnection conn = DB.Connection();
@@ -137,6 +140,7 @@ namespace HairSalon.Models
         }
       }
 
+      //DELETS SINGLE STYLIST
       public static void DeleteStylist(int id)
       {
          MySqlConnection conn = DB.Connection();
@@ -158,6 +162,7 @@ namespace HairSalon.Models
          }
        }
 
+       //FINDS STYLIST BY ID
        public static Stylist Find(int id)
        {
          MySqlConnection conn = DB.Connection();
@@ -191,6 +196,7 @@ namespace HairSalon.Models
          return newStylist;
        }
 
+       //EDITS STYLIST CHAIR AND NAME
        public void EditStylist(string newName, int newChair)
        {
         MySqlConnection conn = DB.Connection();

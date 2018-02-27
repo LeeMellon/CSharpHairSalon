@@ -1,6 +1,6 @@
 # _Hair Salon_
 
-#### _An app for organizing a hair salon. V 0.1 2/23/18_
+#### _An app for organizing a hair salon. V 0.2 2/23/18_
 
 #### By _Ian Goodrich_
 
@@ -63,7 +63,7 @@ git clone https://github.com/LeeMellon/CSharpHairSalon.git
 
 ## Known Bugs
 
-_{Currently the test DB setup is not functioning. Only test in dummy database for now. DO NOT RUN TESTS ON CLIENT DATABASE}_
+_No known bugs.
 
 ## Support and contact details
 

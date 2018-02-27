@@ -125,12 +125,19 @@ namespace HairSalon.Models
         }
       }
 
+      //DELETE ALL CLIENTS BY STYLIST ID
       public static void DeleteAllClientsByStylist(int id)
       {
         MySqlConnection conn = DB.Connection();
         conn.Open();
         var cmd = conn.CreateCommand() as MySqlCommand;
         cmd.CommandText = @"DELETE FROM clients WHERE stylist_id = @searchId;";
+
+        MySqlParameter thisId = new MySqlParameter();
+        thisId.ParameterName = "@searchId";
+        thisId.Value = id;
+        cmd.Parameters.Add(thisId);
+
         cmd.ExecuteNonQuery();
         conn.Close();
         if (conn != null)
@@ -139,7 +146,7 @@ namespace HairSalon.Models
         }
       }
 
-
+      //GETS ALL CLIENTS
       public static List<Client> GetAllClients()
       {
         List<Client> allClients = new List<Client>{};
@@ -167,6 +174,7 @@ namespace HairSalon.Models
         return allClients;
       }
 
+      //SAVE CLIENT
       public void Save()
         {
           MySqlConnection conn = DB.Connection();
@@ -212,6 +220,7 @@ namespace HairSalon.Models
 
         }
 
+        //DELETE CLIENT
         public void DeleteClient()
         {
          MySqlConnection conn = DB.Connection();
@@ -234,6 +243,7 @@ namespace HairSalon.Models
          }
         }
 
+        //FIND CLIENT BY ID
         public static Client Find(int id)
         {
           MySqlConnection conn = DB.Connection();
@@ -273,6 +283,7 @@ namespace HairSalon.Models
           return newClient;
         }
 
+        //EDITS CLIENT DETAILS
         public void EditClient(string newFirstName, string newLastName, long newNumber, string newEmail, int newStylistId)
         {
          MySqlConnection conn = DB.Connection();
@@ -324,6 +335,8 @@ namespace HairSalon.Models
              conn.Dispose();
          }
        }
+
+       //RETURNS LIST OF CLIENTS BY STYLIST ID
        public static List<Client> GetClientsByStylistId(int id)
        {
          List<Client> clientsByStylist = new List<Client>{};
