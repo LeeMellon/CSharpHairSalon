@@ -7,14 +7,14 @@ namespace HairSalon.Tests
 {
 
   [TestClass]
-  public class StylistTest : IDisposable
+  public class StylistTests : IDisposable
   {
     public void Dispose()
     {
       Stylist.DeleteAllStylists();
     }
 
-    public void StylistTests()
+    public StylistTests()
     {
       DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=ian_goodrich_test;";
     }
